@@ -1,35 +1,121 @@
+import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import logo from "../images/logo.png";
 
-function register() {
+function Register() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm();
+
+    const onSubmit = (data) => {
+        // Handle form submission logic here (e.g., sending data to an API)
+        toast.success("Registration successful!");
+        reset(); // Reset the form on successful submission
+    };
+
+    const handleError = (errors) => {
+        Object.keys(errors).forEach((errorKey) => {
+            const message = errors[errorKey]?.message;
+            if (message) {
+                toast.error(message);
+            }
+        });
+    };
+
     return (
         <>
-            <div className="flex w-screen  bg-[#000000] flex-row h-screen border-2 overflow-hidden border-black justify-center items-center">
-                <div className="flex  w-1/2 justify-center items-center h-full m-2 mt-2 mb-2">
-                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl ">
-                        <img className="w-[60px] mb-2 " src={logo}/>
+            <div className="flex w-screen bg-[#000000] flex-row h-screen border-2 overflow-hidden border-black justify-center items-center">
+                <div className="flex w-1/2 justify-center items-center h-full m-2 mt-2 mb-2">
+                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl">
+                        <img className="w-[60px] mb-2" src={logo} alt="Logo" />
                         <h1 className="text-2xl mb-3 text-white">Create account</h1>
-                        <p className="text-white mb-5">Already have an account? Sign in</p>
                         <div className="flex flex-row">
-                            <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md" placeholder="First name"/>
-                            <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md" placeholder="Last name"/>
+                            <p className="text-white mb-5">Already have an account? </p>
+                            <a className="text-blue-500 ml-1 hover:cursor-pointer"> Sign in</a>
                         </div>
-                        <div className="flex flex-row">
-                            <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md" placeholder="Email"/>
-                            <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md" placeholder="Username"/>
-                        </div>
-                        <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px]" placeholder="Password"/>
-                        <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px]" placeholder="Confirm Password"/>
-                        <button className="flex w-[402px] m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700">Sign up with email</button>
-                        <div className="flex flex-row w-[402px] mt-2 items-center justify-start">
+                        <form onSubmit={handleSubmit(onSubmit, handleError)}>
+                            <div className="flex flex-row">
+                                <input
+                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md"
+                                    placeholder="First name"
+                                    {...register("firstName", {
+                                        required: "First name is required",
+                                    })}
+                                />
+                                <input
+                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md"
+                                    placeholder="Last name"
+                                    {...register("lastName", {
+                                        required: "Last name is required",
+                                    })}
+                                />
+                            </div>
+                            <div className="flex flex-row">
+                                <input
+                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md"
+                                    placeholder="Email"
+                                    {...register("email", {
+                                        required: "Email is required",
+                                        pattern: {
+                                            value: /^\S+@\S+$/i,
+                                            message: "Enter a valid email",
+                                        },
+                                    })}
+                                />
+                                <input
+                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md"
+                                    placeholder="Username"
+                                    {...register("username", {
+                                        required: "Username is required",
+                                    })}
+                                />
+                            </div>
                             <input
-                                className="form-checkbox h-5 w-5 text-gray-600 bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-600 focus:outline-none rounded"
-                                type="checkbox"
+                                className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px]"
+                                placeholder="Password"
+                                type="password"
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 6,
+                                        message: "Password must be at least 6 characters",
+                                    },
+                                })}
                             />
-                            <p className="text-white m-1">I agree to the </p>
-                            <a className="text-blue-500 hover: cursor-pointer">Terms of Service</a>
-                            <p className="text-white m-1"> and </p>
-                            <a className="text-blue-500 hover: cursor-pointer">Privacy Policy</a>
-                        </div>
+                            <input
+                                className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px]"
+                                placeholder="Confirm Password"
+                                type="password"
+                                {...register("confirmPassword", {
+                                    required: "Confirm password is required",
+                                    validate: (value, context) =>
+                                        value === context.password || "Passwords do not match",
+                                })}
+                            />
+                            <button
+                                type="submit"
+                                className="flex w-[402px] ml-1 m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700"
+                            >
+                                Sign up with email
+                            </button>
+                            <div className="flex flex-row w-[402px] mt-2 ml-1 items-center justify-start">
+                                <input
+                                    className="form-checkbox h-5 w-5 text-gray-600 bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-600 focus:outline-none rounded"
+                                    type="checkbox"
+                                    {...register("terms", {
+                                        required: "You must agree to the terms and privacy policy",
+                                    })}
+                                />
+                                <p className="text-white  m-1">I agree to the </p>
+                                <a className="text-blue-500 hover:cursor-pointer">Terms of Service</a>
+                                <p className="text-white m-1"> and </p>
+                                <a className="text-blue-500 hover:cursor-pointer">Privacy Policy</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div className="flex w-1/2 h-full m-2 mt-2 mb-2 ">
@@ -59,8 +145,19 @@ function register() {
                     </svg>
                 </div>
             </div>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </>
     );
 }
 
-export default register;
+export default Register;
