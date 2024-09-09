@@ -1,11 +1,35 @@
+import logo from "../images/logo.png";
+
 function register() {
     return (
         <>
             <div className="flex w-screen  bg-[#000000] flex-row h-screen border-2 overflow-hidden border-black justify-center items-center">
                 <div className="flex  w-1/2 justify-center items-center h-full m-2 mt-2 mb-2">
-                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl shadow-gray-600 shadow-custom">
-                        <h1 className="text-2xl text-white">Create account</h1>
-                        <p className="text-white">Already have an account? Sign in</p>
+                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl ">
+                        <img className="w-[60px] mb-2 " src={logo}/>
+                        <h1 className="text-2xl mb-3 text-white">Create account</h1>
+                        <p className="text-white mb-5">Already have an account? Sign in</p>
+                        <div className="flex flex-row">
+                            <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md" placeholder="First name"/>
+                            <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md" placeholder="Last name"/>
+                        </div>
+                        <div className="flex flex-row">
+                            <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md" placeholder="Email"/>
+                            <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md" placeholder="Username"/>
+                        </div>
+                        <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px]" placeholder="Password"/>
+                        <input className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px]" placeholder="Confirm Password"/>
+                        <button className="flex w-[402px] m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700">Sign up with email</button>
+                        <div className="flex flex-row w-[402px] mt-2 items-center justify-start">
+                            <input
+                                className="form-checkbox h-5 w-5 text-gray-600 bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-600 focus:outline-none rounded"
+                                type="checkbox"
+                            />
+                            <p className="text-white m-1">I agree to the </p>
+                            <a className="text-blue-500 hover: cursor-pointer">Terms of Service</a>
+                            <p className="text-white m-1"> and </p>
+                            <a className="text-blue-500 hover: cursor-pointer">Privacy Policy</a>
+                        </div>
                     </div>
                 </div>
                 <div className="flex w-1/2 h-full m-2 mt-2 mb-2 ">
