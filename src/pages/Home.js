@@ -2,10 +2,10 @@ import logo from "../images/logo.png";
 import {Link} from "react-router-dom";
 import diet from "../images/diet.webp";
 import profile from "../images/profile.png";
-import SideBar from "./sideBar";
-import Slider from "./slider";
+import SideBar from "../components/SideBar";
+import Slider from "../components/Slider";
 import {useEffect, useState} from "react";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "../components/ThemeToggle";
 
 function Home(){
 
@@ -60,7 +60,6 @@ function Home(){
                             <h1 className="flex absolute text-[72px] text-white">Diet plan</h1>
                         </div>
                         <div className="flex flex-[30%] m-3 h-[400px] border-2 border-green-500">
-
                         </div>
                     </div>
                     <div className="flex justify-center items-center flex-[80%] max-h-[180px] m-3">

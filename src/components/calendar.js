@@ -1,7 +1,7 @@
 // src/components/Calendar.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import SideBar from "../components/sideBar";
+import SideBar from "./SideBar";
 
 const CalendarComponent = () => {
     const [date, setDate] = useState(new Date());

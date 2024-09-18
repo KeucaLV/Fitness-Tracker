@@ -1,13 +1,13 @@
-import SideBar from "./sideBar";
+import SideBar from "../components/SideBar";
 
-function Profile(){
+function Workouts(){
     return(
         <>
-            <SideBar active="profile"/>
+            <SideBar active="workouts"/>
             <div className="flex w-screen bg-[#000000] flex-col h-screen border-2 overflow-hidden border-black">
             </div>
         </>
     );
 }
 
-export default Profile;
+export default Workouts;

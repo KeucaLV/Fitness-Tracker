@@ -14,14 +14,10 @@ function Register() {
 
     const onSubmit = async (data) => {
         try {
-            // Get CSRF token from meta tag
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            const response = await fetch('http://127.0.0.1:8000/register', {
+            const response = await fetch('http://127.0.0.1:8000/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken, // Include CSRF token in headers
                 },
                 body: JSON.stringify(data),
             });
@@ -31,6 +27,7 @@ function Register() {
                 reset();
             } else {
                 const errorData = await response.json();
+                console.log(errorData.message);
                 toast.error(errorData.message || 'Registration failed.');
             }
         } catch (error) {
@@ -51,30 +48,55 @@ function Register() {
     return (
         <>
             <div className="flex w-screen bg-[#000000] flex-row h-screen border-2 overflow-hidden border-black justify-center items-center">
-                <div className="flex w-1/2 justify-center items-center h-full ml-28 m-2 mt-2 mb-2">
-                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl">
+                <div className="flex w-1/2 justify-center items-center h-full ml-28 m-2 mt-2 mb-2 max-desktop:ml-[73px]">
+                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl max-desktop:w-[300px] max-desktop:p-0 max-desktop:-ml-16">
                         <img className="w-[60px] mb-2" src={logo} alt="Logo" />
-                        <h1 className="text-2xl mb-3 text-white">Sign in to your account</h1>
+                        <h1 className="text-2xl mb-3 text-white">Create account</h1>
                         <div className="flex flex-row">
-                            <p className="text-white mb-5">Dont have an account? </p>
-                            <Link to="/" className="text-blue-500 ml-1 hover:cursor-pointer">
-                                Sign up
+                            <p className="text-white mb-5">Already have an account? </p>
+                            <Link to="/login" className="text-blue-500 ml-1 hover:cursor-pointer">
+                                Sign in
                             </Link>
                         </div>
-                        <form onSubmit={handleSubmit(onSubmit, handleError)}>
+                        <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit, handleError)}>
+                            <div className="flex flex-row justify-center items-center max-desktop:flex-col max-desktop:w-[300px]">
+                                <input
+                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md max-desktop:w-full"
+                                    placeholder="First name"
+                                    {...register("firstname", {
+                                        required: "First name is required",
+                                    })}
+                                />
+                                <input
+                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md max-desktop:w-full"
+                                    placeholder="Last name"
+                                    {...register("lastname", {
+                                        required: "Last name is required",
+                                    })}
+                                />
+                            </div>
+                            <div className="flex flex-row justify-center items-center max-desktop:flex-col max-desktop:w-[300px]">
+                                <input
+                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md max-desktop:w-full"
+                                    placeholder="Email"
+                                    {...register("email", {
+                                        required: "Email is required",
+                                        pattern: {
+                                            value: /^\S+@\S+$/i,
+                                            message: "Enter a valid email",
+                                        },
+                                    })}
+                                />
+                                <input
+                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md max-desktop:w-full"
+                                    placeholder="Username"
+                                    {...register("username", {
+                                        required: "Username is required",
+                                    })}
+                                />
+                            </div>
                             <input
-                                className="m-1 p-2 text-white placeholder-gray-400 w-[402px] bg-gray-800 rounded-md"
-                                placeholder="Email"
-                                {...register("email", {
-                                    required: "Email is required",
-                                    pattern: {
-                                        value: /^\S+@\S+$/i,
-                                        message: "Enter a valid email",
-                                    },
-                                })}
-                            />
-                            <input
-                                className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px]"
+                                className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px] max-desktop:w-[300px]"
                                 placeholder="Password"
                                 type="password"
                                 {...register("password", {
@@ -85,13 +107,23 @@ function Register() {
                                     },
                                 })}
                             />
+                            <input
+                                className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px] max-desktop:w-[300px]"
+                                placeholder="Confirm Password"
+                                type="password"
+                                {...register("confirmPassword", {
+                                    required: "Confirm password is required",
+                                    validate: (value, context) =>
+                                        value === context.password || "Passwords do not match",
+                                })}
+                            />
                             <button
                                 type="submit"
-                                className="flex w-[402px] ml-1 m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700"
+                                className="flex w-[402px] ml-1 m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700 max-desktop:w-[300px]"
                             >
-                                Sign in
+                                Sign up with email
                             </button>
-                            <div className="flex flex-row w-[402px] mt-2 ml-1 items-center justify-start">
+                            <div className="flex flex-row flex-wrap w-[402px] mt-2 ml-1 items-center justify-start text-wrap max-desktop:w-[300px]">
                                 <input
                                     className="form-checkbox h-5 w-5 text-gray-600 bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-600 focus:outline-none rounded"
                                     type="checkbox"
@@ -100,27 +132,24 @@ function Register() {
                                     })}
                                 />
                                 <p className="text-white  m-1">I agree to the </p>
-                                <a className="text-blue-500 hover:cursor-pointer">Terms of Service</a>
+                                <Link to="/terms" className="text-blue-500 hover:cursor-pointer">Terms of Service</Link>
                                 <p className="text-white m-1"> and </p>
-                                <a className="text-blue-500 hover:cursor-pointer">Privacy Policy</a>
+                                <Link to="/privacy" className="text-blue-500 hover:cursor-pointer">Privacy Policy</Link>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div className="flex absolute flex-col w-[600px]  z-10 bottom-[21%] right-10">
-                    <h2 className="text-white text-2xl mb-3 font-bold">
-                        Unlock Your Potential, One Rep at a Time. Transform Your Body, Elevate Your Life!
+                <div className="flex absolute flex-col w-[600px]  z-10 bottom-[30%] right-10 max-desktop:hidden">
+                    <h2 className="text-white text-3xl mb-3 font-bold">
+                        Transform Your Body, Elevate Your Life!
                     </h2>
-                    <h2 className="text-white text-lg mb-3 font-medium">
+                    <h2 className="text-white text-md mb-3 font-medium">
                         Welcome to your ultimate fitness hub! Build muscle, burn fat, or boost your health with our personalized meal planner,
                         targeted exercises, activity calendar, and competitive leaderboard.
-                        Let's elevate your fitness journey!
                     </h2>
-                    <h2 className="text-white text-lg mb-3 font-bold">
-                        Join a community that pushes you to be the best version of yourself—let’s rise together!
-                    </h2>
+
                 </div>
-                <div className="flex w-[900px] h-full m-2 mt-2 mb-2 ">
+                <div className="flex w-[900px] h-full m-2 mt-2 mb-2 max-desktop:hidden">
                     <svg
                         className="flex relative w-[1500px] h-[1200px] -right-2 -top-[250px]"
                         xmlns="http://www.w3.org/2000/svg"

@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Register from './components/register';
-import Login from './components/login'; // Import the Login component
-import Home from './components/home';
-import Terms from "./components/terms";
-import Privacy from "./components/privacy";
-import Slider from "./components/slider";
-import Profile from "./components/profile";
-import CalendarComponent from "./components/calendar";
-import Workouts from "./components/workouts";
+import Register from './pages/Register';
+import Login from './pages/Login'; // Import the Login component
+import Home from './pages/Home';
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Slider from "./components/Slider";
+import Profile from "./pages/Profile";
+import CalendarComponent from "./components/Calendar";
+import Workouts from "./pages/Workouts";
 import Test from "./components/test";
 // import NotFound from './components/notfound';
 
@@ -24,7 +24,6 @@ function App() {
                 <Route path="/workouts" element={<Workouts />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/privacy" element={<Privacy />} />
-                <Route path="/slider" element={<Slider />} />
                 <Route path="/test" element={<Test />} />
                 {/*<Route path="*" element={<NotFound />} />*/}
             </Routes>
