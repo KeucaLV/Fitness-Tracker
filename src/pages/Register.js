@@ -61,14 +61,14 @@ function Register() {
                         <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit, handleError)}>
                             <div className="flex flex-row justify-center items-center max-desktop:flex-col max-desktop:w-[300px]">
                                 <input
-                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md max-desktop:w-full"
+                                    className="m-1 p-2 text-white placeholder-gray-400 w-[198px] bg-gray-800 rounded-md max-desktop:w-full"
                                     placeholder="First name"
                                     {...register("firstname", {
                                         required: "First name is required",
                                     })}
                                 />
                                 <input
-                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md max-desktop:w-full"
+                                    className="m-1 p-2 text-white placeholder-gray-400 w-[198px] bg-gray-800 rounded-md max-desktop:w-full"
                                     placeholder="Last name"
                                     {...register("lastname", {
                                         required: "Last name is required",
@@ -77,7 +77,7 @@ function Register() {
                             </div>
                             <div className="flex flex-row justify-center items-center max-desktop:flex-col max-desktop:w-[300px]">
                                 <input
-                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md max-desktop:w-full"
+                                    className="m-1 p-2 text-white placeholder-gray-400 w-[198px] bg-gray-800 rounded-md max-desktop:w-full"
                                     placeholder="Email"
                                     {...register("email", {
                                         required: "Email is required",
@@ -88,7 +88,7 @@ function Register() {
                                     })}
                                 />
                                 <input
-                                    className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md max-desktop:w-full"
+                                    className="m-1 p-2 text-white placeholder-gray-400 w-[198px] bg-gray-800 rounded-md max-desktop:w-full"
                                     placeholder="Username"
                                     {...register("username", {
                                         required: "Username is required",
