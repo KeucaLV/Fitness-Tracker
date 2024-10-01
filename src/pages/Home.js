@@ -6,6 +6,7 @@ import SideBar from "../components/SideBar";
 import Slider from "../components/Slider";
 import {useEffect, useState} from "react";
 import ThemeToggle from "../components/ThemeToggle";
+import Calendar from "../components/Calendar";
 
 function Home(){
 
@@ -33,9 +34,9 @@ function Home(){
     return(
         <>
             <SideBar active="home"/>
-            <div className="flex w-screen bg-[#000000] dark:bg-white flex-col h-screen border-2 overflow-hidden border-black">
-                <div className="flex relative flex-col w-[1363px] h-screen left-[108px] m-0">
-                    <div className="flex relative justify-between items-center w-[1363px] p-2 h-[100px] dark:bg-gray-100 -top-4 bg-[#131313]">
+            <div className="flex w-screen bg-[#000000] font-montserrat flex-wrap dark:bg-white flex-col h-screen overflow-hidden max-desktop:overflow-scroll">
+                <div className="flex relative flex-col w-[1363px]  h-screen left-[90px] m-0 max-desktop:flex-col max-desktop:left-0">
+                    <div className="flex relative justify-between  items-center w-[1390px]  p-2 h-[100px] dark:bg-gray-100 -top-4 bg-[#131313]">
                         <div className="flex flex-row ">
                             <div className="flex flex-col p-4">
                                 <h3 className="dark:text-gray-800 text-gray-400 text-sm">{greeting}</h3>
@@ -53,14 +54,17 @@ function Home(){
                             </div>
                         </div>
                     </div>
-                    <h1 className="m-3 text-2xl dark:text-black text-white">Start your weight loss today!</h1>
-                    <div className="flex flex-row justify-between">
-                        <div className="flex flex-[40%] m-3 justify-center items-center h-[400px] hover:scale-[101%] hover:cursor-pointer ease-in-out duration-500">
+                    <h1 className="m-3 text-2xl dark:text-black text-white">Start your journey today!</h1>
+                    <div className="flex flex-row items-center  justify-between max-desktop:flex-col ">
+                        <Link to="/diet" className="flex flex-[40%] m-4 justify-center items-center h-[400px] hover:scale-[101%] hover:cursor-pointer ease-in-out duration-500 max-desktop:m-0 max-desktop:w-[70%] max-desktop:-ml-72">
                             <img className="w-full h-full brightness-[40%]" src={diet}/>
                             <h1 className="flex absolute text-[72px] text-white">Diet plan</h1>
-                        </div>
-                        <div className="flex flex-[30%] m-3 h-[400px] border-2 border-green-500">
-                        </div>
+                        </Link>
+                        <Link to="/calendar" className="flex flex-[30%] justify-center  m-3 h-[400px] hover:scale-[101%] hover:cursor-pointer ease-in-out duration-500">
+                            <div className="flex flex-[30%] dark:bg-white -m-6 z-10 h-[400px] hover:cursor-pointer">
+                                <Calendar isSmall={true} />
+                            </div>
+                        </Link>
                     </div>
                     <div className="flex justify-center items-center flex-[80%] max-h-[180px] m-3">
                         <Slider/>

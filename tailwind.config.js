@@ -16,6 +16,12 @@ module.exports = {
       // => @media (min-width: 1280px) { ... }
     },
     extend: {
+      colors: {
+        'accent-green': '#C8FFA6',
+      },
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+      },
       boxShadow: {
         'custom': 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
       },

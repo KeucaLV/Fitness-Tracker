@@ -2,27 +2,34 @@ import logo from "../images/logo.png";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import ThemeToggle from "./ThemeToggle";
+import { useNavigate } from "react-router-dom";
 
 function SideBar({ active }){
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
 
-    const isActive = (path) => active === path ? 'text-green-500' : 'text-white';
+
+    const handleLogout = () => {
+        localStorage.removeItem('access_token'); // Assuming 'accessToken' is stored in localStorage
+        navigate("/login"); // Redirect to the login page
+    };
+    const isActive = (path) => active === path ? 'text-green-500 dark:text-green-500' : 'text-white';
     return(
         <>
             <div
                 className={`${
                     isOpen ? 'translate-x-0' : '-translate-x-full'
-                } fixed left-0 top-0 w-[110px] h-full dark:bg-gray-100 bg-[#131313] transition-transform duration-300 flex flex-col justify-between items-center desktop:translate-x-0`}
+                } fixed left-0 top-0 w-[100px] h-full dark:bg-gray-100 bg-[#131313] z-10 transition-transform duration-300 flex flex-col justify-between items-center desktop:translate-x-0`}
             >
                 <div className="flex flex-col justify-center items-center">
                     <img className="w-[50px] h-[50px] m-5" src={logo} alt="Logo" />
                 </div>
                 {/*<div className="flex text-white flex-col w-1/2 justify-evenly items-center h-1/2">*/}
-                <div className="flex text-white dark:text-black flex-col w-1/2 justify-center items-center h-1/2">
+                <div className="flex text-white dark:text-black flex-col  w-1/2 justify-center items-center h-1/2">
                     <Link to="/home" className={`py-4 w-full dark:text-black flex hover:text-green-500 hover:scale(105%) ease-in-out duration-100 justify-center border-b-[1px] dark:border-black border-white ${isActive("home")}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7 hover:size-8 ease-in-out duration-500">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -50,7 +57,10 @@ function SideBar({ active }){
                 >
                     {isOpen ? "<" : ">"}
                 </button>
-                <button className="m-5 text-white dark:text-black">
+                <button
+                    onClick={handleLogout} // Trigger the logout function on click
+                    className="m-5 text-white dark:text-black"
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
                     </svg>

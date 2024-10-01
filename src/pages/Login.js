@@ -1,43 +1,51 @@
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import logo from "../images/logo.png";
 
-function Register() {
+function Login() {
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
     } = useForm();
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
-            // Get CSRF token from meta tag
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            const response = await fetch('http://127.0.0.1:8000/register', {
-                method: 'POST',
+            const response = await fetch("http://localhost:8000/api/login", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken, // Include CSRF token in headers
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
-                body: JSON.stringify(data),
+                credentials: 'include', // To include the cookie with Sanctum if needed
+                body: JSON.stringify({
+                    email: data.email,
+                    password: data.password,
+                }),
             });
 
+            const result = await response.json();
+
             if (response.ok) {
-                toast.success('Registration successful!');
-                reset();
+                // Save access token to localStorage
+                localStorage.setItem("access_token", result.access_token);
+
+                // Console log the local storage value
+                console.log("Access Token saved in localStorage:", localStorage.getItem("access_token"));
+
+                toast.success("Login successful");
+                navigate('/home');
             } else {
-                const errorData = await response.json();
-                toast.error(errorData.message || 'Registration failed.');
+                toast.error(result.message || 'Login failed');
             }
         } catch (error) {
-            toast.error('An error occurred while submitting the form.');
+            toast.error('Login failed. Please try again.');
         }
     };
-
 
     const handleError = (errors) => {
         Object.keys(errors).forEach((errorKey) => {
@@ -50,9 +58,9 @@ function Register() {
 
     return (
         <>
-            <div className="flex w-screen bg-[#000000] flex-row h-screen border-2 overflow-hidden border-black justify-center items-center">
-                <div className="flex w-1/2 justify-center items-center h-full ml-28 m-2 mt-2 mb-2">
-                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl">
+            <div className="flex w-screen bg-[#000000] font-montserrat flex-row h-screen overflow-hidden justify-center items-center">
+                <div className="flex w-1/2 justify-center items-center h-full ml-28 m-2 mt-2 mb-2 max-desktop:ml-[73px]">
+                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl max-desktop:w-[300px] max-desktop:p-0 max-desktop:-ml-16">
                         <img className="w-[60px] mb-2" src={logo} alt="Logo" />
                         <h1 className="text-2xl mb-3 text-white">Sign in to your account</h1>
                         <div className="flex flex-row">
@@ -61,9 +69,9 @@ function Register() {
                                 Sign up
                             </Link>
                         </div>
-                        <form onSubmit={handleSubmit(onSubmit, handleError)}>
+                        <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit, handleError)}>
                             <input
-                                className="m-1 p-2 text-white placeholder-gray-400 w-[402px] bg-gray-800 rounded-md"
+                                className="m-1 p-2 text-white placeholder-gray-400 w-[402px] bg-gray-800 rounded-md max-desktop:w-[300px]"
                                 placeholder="Email"
                                 {...register("email", {
                                     required: "Email is required",
@@ -74,7 +82,7 @@ function Register() {
                                 })}
                             />
                             <input
-                                className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px]"
+                                className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px] max-desktop:w-[300px]"
                                 placeholder="Password"
                                 type="password"
                                 {...register("password", {
@@ -87,36 +95,37 @@ function Register() {
                             />
                             <button
                                 type="submit"
-                                className="flex w-[402px] ml-1 m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700"
+                                className="flex w-[402px] ml-1 m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700 max-desktop:w-[300px]"
                             >
                                 Sign in
                             </button>
-                            <div className="flex flex-row w-[402px] mt-2 ml-1 items-center justify-start">
+                            <div className="flex flex-row flex-wrap w-[402px] mt-2 ml-1 items-center justify-start text-wrap max-desktop:w-[300px]">
                                 <input
-                                    className="form-checkbox h-5 w-5 text-gray-600 bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-600 focus:outline-none rounded"
+                                    className="form-checkbox h-4 w-4 text-gray-600 bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-600 focus:outline-none rounded"
                                     type="checkbox"
                                     {...register("terms", {
                                         required: "You must agree to the terms and privacy policy",
                                     })}
                                 />
-                                <p className="text-white  m-1">I agree to the </p>
-                                <a className="text-blue-500 hover:cursor-pointer">Terms of Service</a>
-                                <p className="text-white m-1"> and </p>
-                                <a className="text-blue-500 hover:cursor-pointer">Privacy Policy</a>
+                                <p className="text-white text-sm  m-1">I agree to the </p>
+                                <Link to="/terms" className="text-blue-500 text-sm hover:cursor-pointer">Terms of Service</Link>
+                                <p className="text-white text-sm m-1"> and </p>
+                                <Link to="/privacy" className="text-blue-500 text-sm hover:cursor-pointer">Privacy Policy</Link>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div className="flex absolute flex-col w-[600px]  z-10 bottom-[30%] right-10">
-                    <h2 className="text-white text-3xl mb-3 font-bold">
+                <div className="flex absolute flex-col w-[600px]  z-10 bottom-[30%] right-10 max-desktop:hidden">
+                    <h2 className="text-white text-2xl mb-3 font-montserrat font-bold">
                         Transform Your Body, Elevate Your Life!
                     </h2>
-                    <h2 className="text-white text-md mb-3 font-medium">
+                    <h2 className="text-white text-sm mb-3 font-montserrat font-medium">
                         Welcome to your ultimate fitness hub! Build muscle, burn fat, or boost your health with our personalized meal planner,
                         targeted exercises, activity calendar, and competitive leaderboard.
                     </h2>
+
                 </div>
-                <div className="flex w-[900px] h-full m-2 mt-2 mb-2 ">
+                <div className="flex w-[900px] h-full m-2 mt-2 mb-2 max-desktop:hidden">
                     <svg
                         className="flex relative w-[1500px] h-[1200px] -right-2 -top-[250px]"
                         xmlns="http://www.w3.org/2000/svg"
@@ -159,4 +168,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Login;

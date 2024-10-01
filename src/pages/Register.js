@@ -18,6 +18,7 @@ function Register() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: "application/json",
                 },
                 body: JSON.stringify(data),
             });
@@ -47,7 +48,7 @@ function Register() {
 
     return (
         <>
-            <div className="flex w-screen bg-[#000000] flex-row h-screen border-2 overflow-hidden border-black justify-center items-center">
+            <div className="flex w-screen bg-[#000000] font-montserrat flex-row h-screen overflow-hidden justify-center items-center">
                 <div className="flex w-1/2 justify-center items-center h-full ml-28 m-2 mt-2 mb-2 max-desktop:ml-[73px]">
                     <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl max-desktop:w-[300px] max-desktop:p-0 max-desktop:-ml-16">
                         <img className="w-[60px] mb-2" src={logo} alt="Logo" />
@@ -119,37 +120,37 @@ function Register() {
                             />
                             <button
                                 type="submit"
-                                className="flex w-[402px] ml-1 m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700 max-desktop:w-[300px]"
+                                className="flex w-[402px] ml-1 m-2 font-montserrat text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700 min-tablet:w-[300px]"
                             >
                                 Sign up with email
                             </button>
                             <div className="flex flex-row flex-wrap w-[402px] mt-2 ml-1 items-center justify-start text-wrap max-desktop:w-[300px]">
                                 <input
-                                    className="form-checkbox h-5 w-5 text-gray-600 bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-600 focus:outline-none rounded"
+                                    className="form-checkbox h-4 w-4 text-gray-600 bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-600 focus:outline-none rounded"
                                     type="checkbox"
                                     {...register("terms", {
                                         required: "You must agree to the terms and privacy policy",
                                     })}
                                 />
-                                <p className="text-white  m-1">I agree to the </p>
-                                <Link to="/terms" className="text-blue-500 hover:cursor-pointer">Terms of Service</Link>
-                                <p className="text-white m-1"> and </p>
-                                <Link to="/privacy" className="text-blue-500 hover:cursor-pointer">Privacy Policy</Link>
+                                <p className="text-white text-sm font-montserrat m-1">I agree to the </p>
+                                <Link to="/terms" className="text-blue-500 text-sm font-montserrat hover:cursor-pointer">Terms of Service</Link>
+                                <p className="text-white text-sm font-montserrat m-1"> and </p>
+                                <Link to="/privacy" className="text-blue-500 text-sm font-montserrat hover:cursor-pointer">Privacy Policy</Link>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div className="flex absolute flex-col w-[600px]  z-10 bottom-[30%] right-10 max-desktop:hidden">
-                    <h2 className="text-white text-3xl mb-3 font-bold">
+                    <h2 className="text-white text-2xl mb-3 font-montserrat font-bold">
                         Transform Your Body, Elevate Your Life!
                     </h2>
-                    <h2 className="text-white text-md mb-3 font-medium">
+                    <h2 className="text-white text-sm mb-3 font-montserrat font-medium">
                         Welcome to your ultimate fitness hub! Build muscle, burn fat, or boost your health with our personalized meal planner,
                         targeted exercises, activity calendar, and competitive leaderboard.
                     </h2>
 
                 </div>
-                <div className="flex w-[900px] h-full m-2 mt-2 mb-2 max-desktop:hidden">
+                <div className="flex w-[900px] h-full max-desktop:hidden">
                     <svg
                         className="flex relative w-[1500px] h-[1200px] -right-2 -top-[250px]"
                         xmlns="http://www.w3.org/2000/svg"
