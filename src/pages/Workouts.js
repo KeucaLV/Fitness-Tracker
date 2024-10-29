@@ -28,14 +28,14 @@ function Workouts() {
 
     return (
         <>
-            <div className="flex flex-col font-montserrat  justify-center dark:bg-white overflow-hidden items-center h-screen bg-[#000000] ">
+            <div className="flex flex-col font-montserrat  justify-center dark:bg-white overflow-hidden items-center bg-[#000000] ">
                 <SideBar active="workouts" />
-                <Header />
-                <h1 className="text-white self-start ml-32 m-4 text-2xl dark:text-black ">Click on a muscle you want to see workouts for!</h1>
-                <div className="flex flex-wrap h-[600px] mb-6">
+                <Header/>
+                <h1 className="text-white self-start ml-32 m-4 mt-0 text-2xl dark:text-black ">Click on a muscle you want to see workouts for!</h1>
+                <div className="flex flex-wrap h-[100%]">
                     {muscleGroups.map((group, index) => (
                         <Link key={index} to={`/workouts${group.link}`}> {/* Wrap in Link */}
-                            <div className="relative left-[170px] w-[300px] h-[300px] md:w-1/4 p-2 hover:scale-[103%] hover:cursor-pointer ease-in-out duration-500">
+                            <div className="relative left-[170px] w-[300px] h-[300px] md:w-1/4 p-2 hover:scale-[103%] hover:cursor-pointer ease-in-out duration-500 max-desktop:left-0">
                                 <img
                                     src={group.image}
                                     alt={group.name}

@@ -1,0 +1,65 @@
+{
+  "exercises": ["Deadlift", "Squats", "Benchpress"],
+  "leaderboard": [
+    {
+      "rank": 1,
+      "name": "Niks Kevins",
+      "weight": 200,
+      "unit": "Kg",
+      "username": "@keucaLV",
+      "image": "../images/baldski.jpg",
+      "videoLink": "#",
+      "color": "blue"
+    },
+    {
+      "rank": 2,
+      "name": "Ralfs",
+      "weight": 230,
+      "unit": "Kg",
+      "username": "@saint",
+      "image": "../images/baldski.jpg",
+      "videoLink": "#",
+      "color": "yellow"
+    },
+    {
+      "rank": 3,
+      "name": "Reinis",
+      "weight": 190,
+      "unit": "Kg",
+      "username": "@agranoli",
+      "image": "../images/baldski.jpg",
+      "videoLink": "#",
+      "color": "green"
+    },
+    {
+      "rank": 4,
+      "name": "tomass",
+      "weight": 170,
+      "unit": "Kg",
+      "username": "@fur1ozz",
+      "image": "../images/baldski.jpg",
+      "videoLink": "#",
+      "color": "blue"
+    },
+    {
+      "rank": 5,
+      "name": "Jānis",
+      "weight": 170,
+      "unit": "Kg",
+      "username": "@Krupix",
+      "image": "../images/baldski.jpg",
+      "videoLink": "#",
+      "color": "blue"
+    },
+    {
+      "rank": 6,
+      "name": "Oļegs",
+      "weight": 170,
+      "unit": "Kg",
+      "username": "@LoveSosa",
+      "image": "../images/baldski.jpg",
+      "videoLink": "#",
+      "color": "blue"
+    }
+  ]
+}

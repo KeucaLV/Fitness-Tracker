@@ -5,38 +5,96 @@ import SideBar from "./SideBar";
 const CalendarComponent = ({ isSmall }) => {
     const [date, setDate] = useState(new Date());
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalMode, setModalMode] = useState('view'); // 'view' or 'add'
     const [selectedDate, setSelectedDate] = useState(null);
     const [duration, setDuration] = useState('');
     const [description, setDescription] = useState('');
     const [name, setName] = useState('');
     const [gymData, setGymData] = useState({});
 
+    const userId = localStorage.getItem('Id');
+
     useEffect(() => {
-        axios.get('/api/gym-data')
-            .then(response => setGymData(response.data))
-            .catch(error => console.error(error));
+        const token = localStorage.getItem('access_token');
+
+        axios.get(`http://127.0.0.1:8000/api/gym-data?user_id=${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(response => {
+                const formattedData = response.data.reduce((acc, workout) => {
+                    acc[workout.date] = {
+                        name: workout.name,
+                        duration: workout.duration,
+                        description: workout.description,
+                    };
+                    return acc;
+                }, {});
+
+                setGymData(formattedData);
+            })
+            .catch(error => console.error("Error fetching gym data:", error));
     }, []);
 
     const handleDateClick = (day) => {
-        if (!isSmall) {  // Only allow clicking if the calendar is not small
-            setSelectedDate(day.toDateString());
+        const today = new Date();
+        const isToday = day.toDateString() === today.toDateString(); // Check if selected day is today
+        const formattedDate = day.toISOString().split('T')[0];
+        const dayData = gymData[formattedDate];
+
+        // Allow clicks for today and future dates
+        if (day >= today || isToday) {
+            if (dayData) {
+                // Open view mode if data exists for this date
+                setModalMode('view');
+                setName(dayData.name);
+                setDuration(dayData.duration);
+                setDescription(dayData.description);
+            } else {
+                // Open add mode if no data exists for this date
+                setModalMode('add');
+                setName('');
+                setDuration('');
+                setDescription('');
+            }
+
+            setSelectedDate(formattedDate);
             setModalOpen(true);
         }
     };
 
+
     const handleSave = () => {
-        axios.post('/api/gym-data', {
+        const token = localStorage.getItem('access_token');
+
+        const requestData = {
+            user_id: userId,
             date: selectedDate,
-            duration
+            duration: parseFloat(duration),
+            name,
+            description
+        };
+
+        axios.post('http://127.0.0.1:8000/api/gym-data', requestData, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         })
-            .then(response => {
+            .then(() => {
                 setGymData(prevData => ({
                     ...prevData,
-                    [selectedDate]: duration
+                    [selectedDate]: {
+                        name,
+                        duration,
+                        description
+                    }
                 }));
                 setModalOpen(false);
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     const handleMonthChange = (direction) => {
@@ -57,22 +115,18 @@ const CalendarComponent = ({ isSmall }) => {
 
         for (let d = 1; d <= endOfMonth.getDate(); d++) {
             const currentDay = new Date(date.getFullYear(), date.getMonth(), d);
-            const dateString = currentDay.toDateString();
+            const formattedDate = currentDay.toISOString().split('T')[0];
             const isToday = currentDay.toDateString() === today.toDateString();
             const isPast = currentDay < today;
-            const noData = !gymData[dateString];
+            const dayData = gymData[formattedDate];
+            const hasData = !!dayData;
 
-            let dayClasses = `w-full ${isSmall ? 'h-[54px]' : 'h-[120px]'} flex items-center justify-center relative cursor-pointer border `;
+            let dayClasses = `w-full ${isSmall ? 'h-[54px]' : 'h-[115px]'} flex items-center justify-center relative cursor-pointer border `;
 
             if (isToday) {
                 dayClasses += "border-green-500 dark:bg-white bg-gray-900 ";
             } else if (isPast) {
-                dayClasses += "border-red-500 ";
-                if (noData) {
-                    dayClasses += "line-through-custom dark:bg-white text-gray-500 cursor-not-allowed hover:bg-black ";
-                } else {
-                    dayClasses += "cursor-not-allowed dark:bg-white hover:bg-gray-700 ";
-                }
+                dayClasses += "border-red-500 line-through-custom dark:bg-white text-gray-500 cursor-not-allowed ";
             } else {
                 dayClasses += "border-gray-600 dark:bg-white hover:bg-gray-700 ";
             }
@@ -81,12 +135,12 @@ const CalendarComponent = ({ isSmall }) => {
                 <div
                     key={d}
                     className={dayClasses}
-                    onClick={() => !isSmall && (isToday || !isPast) && handleDateClick(currentDay)}  // Disable clicks when `isSmall`
+                    onClick={() => !isPast && handleDateClick(currentDay)}
                 >
                     <span>{d}</span>
-                    {gymData[dateString] && (
-                        <div className="absolute bottom-0 right-0 p-1 bg-gray-800 text-white text-xs rounded">
-                            {gymData[dateString]}h
+                    {hasData && (
+                        <div className="absolute bottom-0 left-0 p-1 bg-gray-800 text-white text-xs rounded-tr overflow-hidden whitespace-nowrap text-ellipsis">
+                            {dayData.name}
                         </div>
                     )}
                 </div>
@@ -99,8 +153,7 @@ const CalendarComponent = ({ isSmall }) => {
     return (
         <div className={`flex flex-col w-full dark:bg-white ${isSmall ? 'h-[400px]' : 'h-screen'} md:flex-row`}>
             {isSmall ? null : <SideBar active="calendar" />}
-            <div className={`flex-1 font-montserrat p-2 dark:bg-white dark:text-black bg-black text-white ${isSmall ? 'p-4' : 'ml-24 p-4'} ${isSmall ? 'h-[400px]' : 'h-screen'}`}>
-                {/* Month navigation */}
+            <div className={`flex-1 font-montserrat p-2 dark:bg-white dark:text-black bg-black text-white max-desktop:ml-0 max-desktop:w-[full] ${isSmall ? 'p-4' : 'ml-24 p-4'} ${isSmall ? 'h-[400px]' : 'h-screen'}`}>
                 <div className="flex items-center justify-between mb-4">
                     <button onClick={() => handleMonthChange(-1)} className="text-2xl p-2 rounded hover:bg-gray-600">
                         &lt;
@@ -112,51 +165,46 @@ const CalendarComponent = ({ isSmall }) => {
                         &gt;
                     </button>
                 </div>
-                {/* Weekday headings */}
-                <div className="grid grid-cols-7  gap-2 mb-4">
+                <div className="grid grid-cols-7 gap-2 mb-4">
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
                         <div key={day} className="text-center font-bold">{day}</div>
                     ))}
                 </div>
-                {/* Calendar days */}
                 <div className={`grid grid-cols-7 dark:bg-white gap-2 ${isSmall ? 'text-sm' : ''}`}>
                     {renderCalendarDays()}
                 </div>
                 {modalOpen && (
                     <>
-                        {/* Overlay */}
                         <div className="fixed inset-0 bg-black opacity-60"></div>
-                        {/* Modal */}
-                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black text-white p-6 rounded-lg shadow-lg z-10">
-                            <h2 className="text-xl mb-4">Enter Gym Data</h2>
-                            <input
-                                type="text"
-                                placeholder="Name your workout"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                className="bg-gray-800 text-white border border-gray-600 rounded p-2 mb-4 w-full"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Duration in hours"
-                                value={duration}
-                                onChange={(e) => setDuration(e.target.value)}
-                                className="bg-gray-800 text-white border border-gray-600 rounded p-2 mb-4 w-full"
-                            />
-                            <textarea
-                                placeholder="Describe your workout"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                className="bg-gray-800 text-white border border-gray-600 h-[300px] resize-none rounded p-2 mb-4 w-full"
-                            />
-                            <div className="flex justify-end">
-                                <button onClick={handleSave} className="bg-green-500 text-black p-2 rounded mr-2 hover:bg-green-400">
-                                    Save
-                                </button>
-                                <button onClick={() => setModalOpen(false)} className="bg-red-500 text-black p-2 rounded hover:bg-red-400">
-                                    Cancel
-                                </button>
-                            </div>
+                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black text-white p-6 rounded-lg shadow-lg z-10 max-w-xs">
+                            {modalMode === 'view' ? (
+                                <>
+                                    <h2 className="text-xl mb-4">Workout Details</h2>
+                                    <p><strong>Date:</strong> {selectedDate}</p>
+                                    <p><strong>Name:</strong> {name}</p>
+                                    <p><strong>Duration:</strong> {duration} hours</p>
+                                    <p><strong>Description:</strong> {description}</p>
+                                    <button onClick={() => setModalOpen(false)} className="bg-red-500 text-black p-2 rounded hover:bg-red-400 mt-4">
+                                        Close
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <h2 className="text-xl mb-4">Add Workout</h2>
+                                    <label className="block mb-2">Name:</label>
+                                    <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full mb-2 p-1" />
+                                    <label className="block mb-2">Duration (hours):</label>
+                                    <input type="number" value={duration} onChange={e => setDuration(e.target.value)} className="w-full mb-2 p-1" />
+                                    <label className="block mb-2">Description:</label>
+                                    <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full p-1" />
+                                    <button onClick={handleSave} className="bg-green-500 text-black p-2 rounded hover:bg-green-400 mt-4">
+                                        Save
+                                    </button>
+                                    <button onClick={() => setModalOpen(false)} className="bg-red-500 text-black p-2 rounded hover:bg-red-400 mt-4">
+                                        Cancel
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </>
                 )}

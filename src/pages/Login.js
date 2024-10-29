@@ -15,7 +15,7 @@ function Login() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch("http://localhost:8000/api/login", {
+            const response = await fetch("http://127.0.0.1:8000/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -33,6 +33,14 @@ function Login() {
             if (response.ok) {
                 // Save access token to localStorage
                 localStorage.setItem("access_token", result.access_token);
+                localStorage.setItem("Id", result.user.id);
+                localStorage.setItem('username', result.user.username);
+                localStorage.setItem('email', result.user.email);
+                localStorage.setItem('image', result.user.img);
+                localStorage.setItem('goal_weight', result.user.goal_weight);
+                localStorage.setItem('weight_now', result.user.weight_now);
+
+                console.log(localStorage);
 
                 // Console log the local storage value
                 console.log("Access Token saved in localStorage:", localStorage.getItem("access_token"));
@@ -71,7 +79,7 @@ function Login() {
                         </div>
                         <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit, handleError)}>
                             <input
-                                className="m-1 p-2 text-white placeholder-gray-400 w-[402px] bg-gray-800 rounded-md max-desktop:w-[300px]"
+                                className="m-1 p-2 text-white placeholder-gray-400 w-[402px] border-[#303030] rounded bg-[#171717] max-desktop:w-[300px]"
                                 placeholder="Email"
                                 {...register("email", {
                                     required: "Email is required",
@@ -82,7 +90,7 @@ function Login() {
                                 })}
                             />
                             <input
-                                className="m-1 p-2 text-white placeholder-gray-400 bg-gray-800 rounded-md w-[402px] max-desktop:w-[300px]"
+                                className="m-1 p-2 text-white placeholder-gray-400 border-[#303030] rounded bg-[#171717] w-[402px] max-desktop:w-[300px]"
                                 placeholder="Password"
                                 type="password"
                                 {...register("password", {
@@ -95,7 +103,7 @@ function Login() {
                             />
                             <button
                                 type="submit"
-                                className="flex w-[402px] ml-1 m-2 text-white p-2 rounded-md justify-center bg-blue-600 hover:bg-blue-700 max-desktop:w-[300px]"
+                                className="flex w-[402px] ml-1 m-2 text-white p-2 rounded-md justify-center bg-blue-900 hover:bg-blue-700 max-desktop:w-[300px]"
                             >
                                 Sign in
                             </button>

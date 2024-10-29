@@ -10,7 +10,9 @@ import Profile from "./pages/Profile";
 import CalendarPage from "./pages/CalendarPage";
 import Workouts from "./pages/Workouts";
 import WorkoutList from "./pages/WorkoutList";
-import ProtectedRoute from './components/ProtectedRoute'; // Import the ProtectedRoute
+import ProtectedRoute from './components/ProtectedRoute';
+import FavouriteMeal from "./pages/FavouriteMeal";
+import FavouriteWorkouts from "./pages/FavouriteWorkouts"; // Import the ProtectedRoute
 
 function App() {
     return (
@@ -18,6 +20,7 @@ function App() {
             <Routes>
                 {/* Public routes */}
                 <Route path="/" element={<Register />} />
+                <Route path="/*" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/privacy" element={<Privacy />} />
@@ -51,6 +54,16 @@ function App() {
                 <Route path="/diet" element={
                     <ProtectedRoute>
                         <DietPlan />
+                    </ProtectedRoute>
+                } />
+                <Route path="/favouriteMeal" element={
+                    <ProtectedRoute>
+                        <FavouriteMeal />
+                    </ProtectedRoute>
+                } />
+                <Route path="/favouriteWorkouts" element={
+                    <ProtectedRoute>
+                        <FavouriteWorkouts />
                     </ProtectedRoute>
                 } />
             </Routes>
