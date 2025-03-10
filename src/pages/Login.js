@@ -33,7 +33,7 @@ function Login() {
             if (response.ok) {
                 // Save access token to localStorage
                 localStorage.setItem("access_token", result.access_token);
-                localStorage.setItem("Id", result.user.id);
+                localStorage.setItem("Id", result.user.userId);
                 localStorage.setItem('username', result.user.username);
                 localStorage.setItem('email', result.user.email);
                 localStorage.setItem('image', result.user.img);

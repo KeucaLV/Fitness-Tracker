@@ -122,7 +122,8 @@ function Leaderboard(){
                         <div className="flex text-black">6.</div>
                         <div className="flex flex-row  items-center w-full ">
                             <div className="flex w-[40px] h-[40px] mr-2 bg-white justify-center items-center overflow-hidden rounded-full">
-                                <img className="flex " src={profile} />
+                                <img className="flex " src={profile
+                                } />
                             </div>
                             <div className="flex flex-col">
                                 <p className="text-black text-sm dark:text-black">Oļegs</p>
