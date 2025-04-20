@@ -25,9 +25,9 @@ function SideBar({ active }){
                     isOpen ? 'translate-x-0' : '-translate-x-full'
                 } fixed left-0 top-0 w-[100px] h-full dark:bg-gray-100 bg-[#131313] z-10 transition-transform duration-300 flex flex-col justify-between items-center desktop:translate-x-0`}
             >
-                <div className="flex flex-col justify-center items-center">
+                <Link to="/home" className="flex flex-col justify-center items-center">
                     <img className="w-[50px] h-[50px] m-5" src={logo} alt="Logo" />
-                </div>
+                </Link>
                 {/*<div className="flex text-white flex-col w-1/2 justify-evenly items-center h-1/2">*/}
                 <div className="flex text-white dark:text-black flex-col  w-1/2 justify-center items-center h-1/2">
                     <Link to="/home" className={`py-4 w-full dark:text-black flex hover:text-green-500 hover:scale(105%) ease-in-out duration-100 justify-center border-b-[1px] dark:border-black border-white ${isActive("home")}`}>

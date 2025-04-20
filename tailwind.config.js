@@ -7,7 +7,7 @@ module.exports = {
 
   theme: {
     screens: {
-      'tablet': '320px',
+      'tablet': '600px',
       // => @media (min-width: 320px) { ... }
 
       'laptop': '1024px',
@@ -34,6 +34,9 @@ module.exports = {
           '0%': { boxShadow: '0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.4), 0 0 15px rgba(255, 255, 255, 0.3)' },
           '50%': { boxShadow: '0 -5px 10px rgba(255, 255, 255, 0.5), 0 -10px 20px rgba(255, 255, 255, 0.4), 0 -15px 30px rgba(255, 255, 255, 0.3)' },
           '100%': { boxShadow: '0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.4), 0 0 15px rgba(255, 255, 255, 0.3)' },
+        },
+        animation: {
+          spin: 'spin 5s linear infinite',
         },
       },
     },

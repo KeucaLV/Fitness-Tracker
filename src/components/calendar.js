@@ -17,7 +17,7 @@ const CalendarComponent = ({ isSmall }) => {
     useEffect(() => {
         const token = localStorage.getItem('access_token');
 
-        axios.get(`http://127.0.0.1:8000/api/gym-data?user_id=${userId}`, {
+        axios.get(`https://admin.kevfitness.com/api/gym-data?user_id=${userId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -76,7 +76,7 @@ const CalendarComponent = ({ isSmall }) => {
             description
         };
 
-        axios.post('http://127.0.0.1:8000/api/gym-data', requestData, {
+        axios.post('https://admin.kevfitness.com/api/gym-data', requestData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -167,7 +167,7 @@ const CalendarComponent = ({ isSmall }) => {
                 </div>
                 <div className="grid grid-cols-7 gap-2 mb-4">
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                        <div key={day} className="text-center font-bold">{day}</div>
+                        <div key={day} className="text-center uppercase font-bold">{day}</div>
                     ))}
                 </div>
                 <div className={`grid grid-cols-7 dark:bg-white gap-2 ${isSmall ? 'text-sm' : ''}`}>

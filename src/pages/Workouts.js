@@ -28,27 +28,29 @@ function Workouts() {
 
     return (
         <>
-            <div className="flex flex-col font-montserrat  justify-center dark:bg-white overflow-hidden items-center bg-[#000000] ">
-                <SideBar active="workouts" />
-                <Header/>
-                <h1 className="text-white self-start ml-32 m-4 mt-0 text-2xl dark:text-black ">Click on a muscle you want to see workouts for!</h1>
-                <div className="flex flex-wrap h-[100%]">
+        <SideBar active="workouts" />
+            <div className="flex flex-col h-[100%] font-montserrat justify-center overflow-x-hidden dark:bg-white items-center bg-[#000000]">
+                <div className="flex relative flex-col pl-[100px] w-screen h-screen m-0 max-desktop:flex-col max-desktop:left-0">
+                    <Header />
+                    <h1 className="text-white self-center m-4 mt-2 text-3xl  dark:text-black uppercase">Target Your Strength — Choose a Muscle to Train!</h1>
+                    <div className="grid grid-cols-3 max-desktop:grid-cols-3 p-[20px] max-laptop:grid-cols-2 max-tablet:grid-cols-1 gap-5 w-full">
                     {muscleGroups.map((group, index) => (
-                        <Link key={index} to={`/workouts${group.link}`}> {/* Wrap in Link */}
-                            <div className="relative left-[170px] w-[300px] h-[300px] md:w-1/4 p-2 hover:scale-[103%] hover:cursor-pointer ease-in-out duration-500 max-desktop:left-0">
-                                <img
-                                    src={group.image}
-                                    alt={group.name}
-                                    className="w-full object-cover brightness-[50%]"
-                                />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <span className="text-white text-4xl">
-                                        {group.name}
-                                    </span>
-                                </div>
+                        <Link key={index} to={`/workouts${group.link}`}>
+                        <div className="relative hover:brightness-[70%] hover:cursor-pointer ease-in-out duration-500">
+                            <img
+                            src={group.image}
+                            alt={group.name}
+                            className="w-full h-[240px] object-cover brightness-[50%] rounded-lg"
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-white text-2xl md:text-4xl font-semibold uppercase">
+                                {group.name}
+                            </span>
                             </div>
+                        </div>
                         </Link>
                     ))}
+                    </div>
                 </div>
             </div>
         </>

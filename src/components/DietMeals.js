@@ -8,7 +8,7 @@ function DietMeals() {
     const [starredMeals, setStarredMeals] = useState([]); // Track only starred meal IDs
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/meal-plans')
+        fetch('https://admin.kevfitness.com/api/meal-plans')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -58,7 +58,7 @@ function DietMeals() {
             prev.includes(mealId) ? prev.filter(id => id !== mealId) : [...prev, mealId]
         );
 
-        fetch('http://127.0.0.1:8000/api/favoriteMeal', {
+        fetch('https://admin.kevfitness.com/api/favoriteMeal', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

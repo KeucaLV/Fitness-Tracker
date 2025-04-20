@@ -15,7 +15,7 @@ function Login() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/login", {
+            const response = await fetch("https://admin.kevfitness.com/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -66,9 +66,9 @@ function Login() {
 
     return (
         <>
-            <div className="flex w-screen bg-[#000000] font-montserrat flex-row h-screen overflow-hidden justify-center items-center">
-                <div className="flex w-1/2 justify-center items-center h-full ml-28 m-2 mt-2 mb-2 max-desktop:ml-[73px]">
-                    <div className="flex w-[450px] p-5 h-3/4 justify-center items-center flex-col rounded-2xl max-desktop:w-[300px] max-desktop:p-0 max-desktop:-ml-16">
+            <div className="flex bg-[#000000] h-screen font-montserrat flex-row justify-center items-center">
+                <div className="flex w-1/2 justify-center items-center ml-28 m-2 mt-2 max-desktop:ml-[73px]">
+                    <div className="flex w-[450px] p-5 justify-center items-center flex-col rounded-2xl max-desktop:w-[300px] max-desktop:p-0 max-desktop:-ml-16">
                         <img className="w-[60px] mb-2" src={logo} alt="Logo" />
                         <h1 className="text-2xl mb-3 text-white">Sign in to your account</h1>
                         <div className="flex flex-row">
@@ -123,7 +123,7 @@ function Login() {
                         </form>
                     </div>
                 </div>
-                <div className="flex absolute flex-col w-[600px]  z-10 bottom-[30%] right-10 max-desktop:hidden">
+                <div className="flex absolute flex-col w-[600px] z-10 right-10 max-desktop:hidden">
                     <h2 className="text-white text-2xl mb-3 font-montserrat font-bold">
                         Transform Your Body, Elevate Your Life!
                     </h2>
@@ -133,9 +133,9 @@ function Login() {
                     </h2>
 
                 </div>
-                <div className="flex w-[900px] h-full m-2 mt-2 mb-2 max-desktop:hidden">
+                <div className="flex w-[900px] h-full m-2 mt-2 overflow-hidden max-desktop:hidden">
                     <svg
-                        className="flex relative w-[1500px] h-[1200px] -right-2 -top-[250px]"
+                        className="relative scale-125 w-full h-full object-fill -top-[10%]"
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"
                         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -150,13 +150,14 @@ function Login() {
                             </clipPath>
                         </defs>
                         <image
-                            className="brightness-50"
                             x="0"
                             y="0"
-                            width="130%"
-                            height="110%"
-                            xlinkHref="https://longevity.technology/lifestyle/wp-content/uploads/2023/07/man-weightlifting-while-standing-at-gym.jpg"
+                            width="100%"
+                            height="100%"
+                            preserveAspectRatio="xMidYMid slice"
+                            xlinkHref="https://img.freepik.com/free-photo/fitness-train-male-strong-power_1296-390.jpg?t=st=1745151290~exp=1745154890~hmac=a597109ad0c3e84b8a371a0f239d306d08af69f20663b1fdc95051decb6b28a9&w=740"
                             clipPath="url(#clip-shape)"
+                            className="brightness-50"
                         />
                     </svg>
                 </div>

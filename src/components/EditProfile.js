@@ -18,7 +18,7 @@ function EditProfile({ onClose }) {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/lietotajs?user_id=${userId}`, {
+                const response = await axios.get(`https://admin.kevfitness.com/api/lietotajs?user_id=${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                     },
@@ -58,7 +58,7 @@ function EditProfile({ onClose }) {
         }
 
         try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/lietotajs/${userId}`, formData, {
+            const response = await axios.put(`https://admin.kevfitness.com/api/lietotajs/${userId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data', // Important for file uploads
                     'Authorization': `Bearer ${user.token}` // Include authorization if needed

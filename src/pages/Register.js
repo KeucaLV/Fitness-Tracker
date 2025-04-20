@@ -45,7 +45,7 @@ function Register() {
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/register', {
+            const response = await fetch('https://admin.kevfitness.com/api/register', {
                 method: 'POST',
                 headers: {
                     Accept: "application/json",
@@ -141,7 +141,7 @@ function Register() {
                                             })}
                                         />
                                     </div>
-                                    <div className="flex flex-row">
+                                    <div className="flex flex-wrap flex-row">
                                         <input
                                             className="m-1 p-2 text-white placeholder-gray-400 border-[#303030] rounded bg-[#171717] w-[198px] max-desktop:w-[300px]"
                                             placeholder="Password"
@@ -226,7 +226,7 @@ function Register() {
                         </form>
                     </div>
                 </div>
-                <div className="flex absolute flex-col w-[600px] z-10 bottom-[30%] right-10 max-desktop:hidden">
+                <div className="flex absolute flex-col w-[600px] z-10 right-10 max-desktop:hidden">
                     <h2 className="text-white text-2xl mb-3 font-montserrat font-bold">
                         Transform Your Body, Elevate Your Life!
                     </h2>
@@ -235,9 +235,9 @@ function Register() {
                         targeted exercises, activity calendar, and competitive leaderboard.
                     </h2>
                 </div>
-                <div className="flex w-[900px] h-full max-desktop:hidden">
+                <div className="flex w-[900px] h-full m-2 mt-2 overflow-hidden max-desktop:hidden">
                     <svg
-                        className="flex relative w-[1500px] h-[1200px] -right-2 -top-[250px]"
+                        className="relative scale-125 w-full h-full object-fill -top-[10%]"
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"
                         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -252,13 +252,14 @@ function Register() {
                             </clipPath>
                         </defs>
                         <image
-                            className="brightness-50"
                             x="0"
                             y="0"
-                            width="130%"
-                            height="110%"
-                            xlinkHref="https://longevity.technology/lifestyle/wp-content/uploads/2023/07/man-weightlifting-while-standing-at-gym.jpg"
+                            width="100%"
+                            height="100%"
+                            preserveAspectRatio="xMidYMid slice"
+                            xlinkHref="https://img.freepik.com/free-photo/fitness-train-male-strong-power_1296-390.jpg?t=st=1745151290~exp=1745154890~hmac=a597109ad0c3e84b8a371a0f239d306d08af69f20663b1fdc95051decb6b28a9&w=740"
                             clipPath="url(#clip-shape)"
+                            className="brightness-50"
                         />
                     </svg>
                 </div>

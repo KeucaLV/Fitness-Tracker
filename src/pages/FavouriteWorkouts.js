@@ -20,7 +20,7 @@ function FavouriteWorkouts() {
             }
 
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/userFavoritesWorkouts/${userId}`, {
+                const response = await fetch(`https://admin.kevfitness.com/api/userFavoritesWorkouts/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                     },

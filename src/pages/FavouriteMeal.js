@@ -13,7 +13,7 @@ function FavouriteMeal() {
     useEffect(() => {
         const fetchFavorites = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/userFavorites/${userId}`);
+                const response = await fetch(`https://admin.kevfitness.com/api/userFavorites/${userId}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch favorite meals');
                 }
@@ -29,7 +29,7 @@ function FavouriteMeal() {
         const fetchMealDetails = async (mealIds) => {
             const mealDetails = await Promise.all(
                 mealIds.map(async (mealId) => {
-                    const response = await fetch(`http://127.0.0.1:8000/api/meals/${mealId}`); // Adjust API endpoint as necessary
+                    const response = await fetch(`https://admin.kevfitness.com/api/meals/${mealId}`); // Adjust API endpoint as necessary
                     if (!response.ok) {
                         throw new Error(`Failed to fetch meal with ID ${mealId}`);
                     }

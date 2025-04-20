@@ -52,7 +52,7 @@ const Slider = () => {
             </div>
 
             {/* Slider Container */}
-            <div className="overflow-hidden w-[920px] mb-10 mx-auto">
+            <div className="overflow-hidden w-[920px] mx-auto">
                 <div
                     className="flex transition-transform duration-500  ease-in-out"
                     style={{ transform: `translateX(-${currentIndex * 300}px)` }}
@@ -68,7 +68,7 @@ const Slider = () => {
                                     src={muscle.image}
                                     className="w-[300px] brightness-[80%] h-[180px] object-cover dark: opacity-80"
                                 />
-                                <div className="absolute  inset-0 flex justify-center items-center text-white text-4xl bg-black bg-opacity-30">
+                                <div className="absolute  inset-0 flex justify-center items-center text-white uppercase text-4xl bg-black bg-opacity-30">
                                     {muscle.name}
                                 </div>
                             </div>

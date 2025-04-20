@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { FaInfoCircle, FaStar } from "react-icons/fa";
-import ThemeToggle from "../components/ThemeToggle";
+import Header from "../components/Header";
 
 function WorkoutList() {
     const { muscle } = useParams();
@@ -21,27 +21,34 @@ function WorkoutList() {
                     'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
                 }
             };
-
+    
             try {
                 const response = await fetch(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${muscle}`, options);
                 const data = await response.json();
+    
+                // Always update workouts first
                 setWorkouts(Array.isArray(data) ? data : data.results || []);
-                setLoading(false);
+    
+                setTimeout(() => {
+                    setLoading(false);
+                }, 1500);
+    
             } catch (error) {
                 console.error("Error fetching the data", error);
                 setLoading(false);
             }
         };
-
+    
         fetchData();
     }, [muscle]);
+    
 
     useEffect(() => {
         const fetchFavorites = async () => {
             if (workouts.length === 0 || !userId) return;
 
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/userFavorites/${userId}`);
+                const response = await fetch(`https://admin.kevfitness.com/api/userFavorites/${userId}`);
                 const favoriteData = await response.json();
                 const favoriteIds = favoriteData.map(fav => fav.workout_id);
 
@@ -64,7 +71,7 @@ function WorkoutList() {
 
         if (updatedStarred[index]) {
             try {
-                const response = await fetch("http://127.0.0.1:8000/api/favoriteWorkout", {
+                const response = await fetch("https://admin.kevfitness.com/api/favoriteWorkout", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -85,7 +92,7 @@ function WorkoutList() {
             }
         } else {
             try {
-                const response = await fetch("http://127.0.0.1:8000/api/unfavoriteWorkout", {
+                const response = await fetch("https://admin.kevfitness.com/api/unfavoriteWorkout", {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -108,67 +115,85 @@ function WorkoutList() {
     };
 
     return (
-        <div className="flex w-screen bg-[#000000] self-start items-start flex-wrap font-montserrat dark:bg-white flex-col h-screen overflow-auto p-4">
-            <SideBar active="workouts" />
-            {loading ? (
-                <div className="text-white text-center">Loading...</div>
-            ) : (
-                <div className="flex flex-wrap justify-center">
-                    {workouts.length === 0 ? (
-                        <div className="text-white text-center">No workouts found.</div>
-                    ) : (
-                        workouts.map((workout, index) => (
-                            <div key={index} className="w-[40%] ml-24 md:w-1/3 p-4 max-desktop:w-[100%] max-desktop:ml-0">
-                                <div className="bg-[#131313] p-4 rounded-lg shadow-[#202020] shadow-[4px_4px_10px_1px] shadow-lg relative dark:bg-gray-200">
-                                    <button onClick={() => setActiveIndex(activeIndex === index ? null : index)} className="absolute top-4 left-4">
-                                        <FaInfoCircle className="text-gray-400 hover:text-white dark:text-black" />
-                                    </button>
-
-                                    <FaStar
-                                        onClick={() => handleStarClick(index)}
-                                        className={`flex relative w-[30px] left-[96%] cursor-pointer transition-all duration-300  
-                                        ${starredWorkouts[index] ? 'text-yellow-500 scale-125' : 'text-gray-500 dark:text-black'} 
-                                        hover:scale-110`}
-                                        style={{ transition: 'transform 0.3s ease' }}
-                                    />
-
-                                    <div className="flex justify-between text-gray-400 mt-4 max-desktop:flex-col">
-                                        <div className="flex flex-col w-full justify-evenly">
-                                            <h2 className="text-white text-3xl font-bold mb-2 dark:text-black">
-                                                {workout.name || 'Workout Name'}
-                                            </h2>
-                                            <p className="text-2xl dark:text-black"><strong>Sets: </strong>3-4</p>
-                                            <p className="text-2xl dark:text-black"><strong>Reps: </strong>8-12</p>
-                                            <p className="text-2xl dark:text-black"><strong>Equipment: </strong>{workout.equipment || 'N/A'}</p>
-                                        </div>
-
-                                        {workout.gifUrl && (
-                                            <img className="flex w-[200px] m-2 self-center max-desktop:w-[300px]" src={workout.gifUrl} alt="Workout GIF" />
-                                        )}
-                                    </div>
-
-                                    {activeIndex === index && (
-                                        <div className="absolute inset-0 bg-gray-800 bg-opacity-100 p-4 rounded-lg flex flex-col justify-center items-center">
-                                            <h3 className="text-white text-2xl mb-4">Explanation</h3>
-                                            <p className="text-gray-300 text-[13px]">
-                                                {workout.instructions || 'No explanation available.'}
-                                            </p>
-                                            <button
-                                                onClick={() => setActiveIndex(null)}
-                                                className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white"
-                                            >
-                                                Close
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ))
-                    )}
+        <>
+          <SideBar active="workouts" />
+          <div className="flex w-screen bg-[#000000] self-start items-start font-montserrat dark:bg-white flex-col h-screen overflow-x-hidden">
+            <div className="flex relative flex-col pl-[90px] w-screen h-screen m-0 max-desktop:pl-0">
+              <Header />
+              {loading ? (
+                <div className="flex flex-col items-center justify-center w-full h-screen text-white dark:text-black">
+                  <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-green-500 mb-6"></div>
+                  <p className="text-xl font-semibold">Fetching killer workouts...</p>
                 </div>
-            )}
-        </div>
-    );
-}
-
-export default WorkoutList;
+              ) : (
+                <>
+                <h1 className="text-white self-center m-4 mt-2 text-3xl  dark:text-black uppercase">The Workout Vault — Exercises & How-To’s</h1>
+                <div className="grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6 p-6 w-full">
+                  {workouts.length === 0 ? (
+                    <div className="text-white text-center col-span-full">No workouts found.</div>
+                  ) : (
+                    workouts.map((workout, index) => (
+                      <div key={index} className="relative flex-wrap bg-[#131313] p-4 rounded-lg shadow-[#202020] shadow-[4px_4px_10px_1px] shadow-lg dark:bg-gray-200">
+                        {/* Info Button */}
+                        <button onClick={() => setActiveIndex(activeIndex === index ? null : index)} className="absolute top-4 left-4 z-10">
+                          <FaInfoCircle className="text-gray-400 hover:text-white dark:text-black" />
+                        </button>
+    
+                        {/* Star Button */}
+                        <FaStar
+                          onClick={() => handleStarClick(index)}
+                          className={`absolute top-4 right-4 z-10 w-[30px] cursor-pointer transition-all duration-300
+                            ${starredWorkouts[index] ? 'text-yellow-500 scale-125' : 'text-gray-500 dark:text-black'}
+                            hover:scale-110`}
+                        />
+    
+                        {/* Workout Content */}
+                        <div className="flex flex-wrap justify-between mt-6 gap-4 text-gray-400 tablet:flex-col">
+                          <div className="flex flex-col justify-evenly w-full">
+                            <h2 className="text-white self-center text-2xl font-bold mb-2 uppercase dark:text-black">
+                              {workout.name || 'Workout Name'}
+                            </h2>
+                            <div className="flex flex-row justify-between mt-2">
+                                <p className="flex items-center justify-center rounded-full p-[5px] max-w-[200px] uppercase text-lg dark:text-black ">3-4 Sets</p>
+                                <p className="self-center p-[5px] text-center text-lg dark:text-black"><strong>Equipment:</strong> <p className="uppercase">{workout.equipment || 'N/A'}</p></p>
+                                <p className="flex items-center justify-center rounded-full p-[5px] max-w-[200px] uppercase text-lg dark:text-black]">8–12 Reps </p>
+                            </div>
+                          </div>
+    
+                          {workout.gifUrl && (
+                            <img
+                              className="w-[200px] tablet:w-full mx-auto rounded-md object-contain mt-4 tablet:mt-2"
+                              src={workout.gifUrl}
+                              alt="Workout GIF"
+                            />
+                          )}
+                        </div>
+    
+                        {/* Explanation Overlay */}
+                        {activeIndex === index && (
+                          <div className="absolute inset-0 bg-black/90 p-4 rounded-lg flex flex-col justify-center items-center z-20">
+                            <h3 className="text-white text-2xl uppercase mb-6">Explanation</h3>
+                            <p className="text-gray-200 text-md max-w-md">
+                              {workout.instructions || 'No explanation available.'}
+                            </p>
+                            <button
+                              onClick={() => setActiveIndex(null)}
+                              className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      );
+    };
+    
+    export default WorkoutList;
