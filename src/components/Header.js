@@ -34,17 +34,17 @@ function Header(){
     }, []);
     return(
         <>
-            <div className="flex relative w-full justify-between items-center pr-[10px] mt-3 p-2 h-[100px] dark:bg-gray-100 flex-wrap -top-4 bg-[#131313] max-desktop:w-[300px]">
+            <div className="flex relative w-full justify-between items-center pr-[10px] mt-3 p-2 dark:bg-gray-100 flex-wrap -top-4 bg-[#131313]">
                 <div className="flex flex-row ">
-                    <div className="flex flex-col p-4">
+                    <div className="flex flex-col p-4 max-tablet:ml-20">
                         <h3 className="dark:text-gray-800 text-[#707070] text-sm">{greeting}</h3>
-                        <h2 className="dark:text-black text-white text-xl">Welcome back, {username}! </h2>
+                        <h2 className="dark:text-black text-white text-xl">Welcome, {username}! </h2>
                     </div>
                     <div className="flex relative top-[5px]">
                         <ThemeToggle />
                     </div>
                 </div>
-                <Link to="/profile" className="flex flex-row justify-center items-center">
+                <Link to="/profile" className="flex flex-row justify-center items-center max-tablet:hidden">
                     <img className="flex justify-center items-center overflow-hidden rounded-full w-[52px] h-[50px]" src={`${img}`} />
                     <div className="flex flex-col p-4">
                         <h3 className="dark:text-gray-800 text-[#707070] text-sm">Beginner</h3>

@@ -59,7 +59,7 @@ function Profile() {
                         <div className="flex flex-row">
                             <div className="flex flex-col justify-center flex-wrap flex-[50%] text-white ">
                                 <div className="flex items-center ">
-                                    <h1 className="text-[18px] -mt-[70px]">Here you can participate in the leaderboard </h1>
+                                    <h1 className="text-[20px] -mt-[70px]">Participate in the leaderboard </h1>
                                     <p className="ml-4 -mt-[70px]">→</p>
                                     <button className="flex justify-center items-center ml-4 p-3 -mt-[70px] h-[25px] rounded-md space-x-3 bg-[#252525] transition-colors hover:bg-white hover:text-black">
                                         Participate
@@ -126,8 +126,8 @@ function Profile() {
                             </div>
                             <Leaderboard />
                         </div>
-                        <h1 className="relative text-white">
-                            Here are some playlists you can listen to while you workout!
+                        <h1 className="relative text-white text-[20px]">
+                            Some playlists you can listen to while you workout!
                         </h1>
                         <div className="flex flex-row flex-wrap">
                             <iframe

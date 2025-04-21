@@ -127,13 +127,13 @@ function WorkoutList() {
                 </div>
               ) : (
                 <>
-                <h1 className="text-white self-center m-4 mt-2 text-3xl  dark:text-black uppercase">The Workout Vault — Exercises & How-To’s</h1>
+                <h1 className="text-white text-center m-4 mt-2 text-3xl  dark:text-black uppercase max-tablet:text-[20px]">The Workout Vault — Exercises & How-To’s</h1>
                 <div className="grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6 p-6 w-full">
                   {workouts.length === 0 ? (
                     <div className="text-white text-center col-span-full">No workouts found.</div>
                   ) : (
                     workouts.map((workout, index) => (
-                      <div key={index} className="relative flex-wrap bg-[#131313] p-4 rounded-lg shadow-[#202020] shadow-[4px_4px_10px_1px] shadow-lg dark:bg-gray-200">
+                      <div key={index} className="relative flex-wrap bg-[#131313] p-4 rounded-lg shadow-[#131313] shadow-[2px_2px_5px_1px] shadow-lg dark:bg-[#FFFFFF] dark:shadow-[#CECECE]">
                         {/* Info Button */}
                         <button onClick={() => setActiveIndex(activeIndex === index ? null : index)} className="absolute top-4 left-4 z-10">
                           <FaInfoCircle className="text-gray-400 hover:text-white dark:text-black" />
@@ -156,7 +156,7 @@ function WorkoutList() {
                             <div className="flex flex-row justify-between mt-2">
                                 <p className="flex items-center justify-center rounded-full p-[5px] max-w-[200px] uppercase text-lg dark:text-black ">3-4 Sets</p>
                                 <p className="self-center p-[5px] text-center text-lg dark:text-black"><strong>Equipment:</strong> <p className="uppercase">{workout.equipment || 'N/A'}</p></p>
-                                <p className="flex items-center justify-center rounded-full p-[5px] max-w-[200px] uppercase text-lg dark:text-black]">8–12 Reps </p>
+                                <p className="flex items-center justify-center rounded-full p-[5px] max-w-[200px] uppercase text-lg dark:text-black]">8–12 Reps</p>
                             </div>
                           </div>
     

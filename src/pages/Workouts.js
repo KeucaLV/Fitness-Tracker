@@ -20,7 +20,7 @@ function Workouts() {
         { name: "Legs", image: Legs, link: "/lower legs" },
         { name: "glutes", image: Glutes, link: "/upper legs" },
         { name: "biceps", image: Bicep, link: "/upper arms" },
-        { name: "Tricep", image: Tricep, link: "/tricep" },
+        { name: "Tricep", image: Tricep, link: "/upper arms" },
         { name: "Shoulder", image: Shoulder, link: "/shoulder" },
         { name: "Abs", image: Abs, link: "/waist" },
     ];

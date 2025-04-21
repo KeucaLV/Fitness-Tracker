@@ -23,9 +23,9 @@ function SideBar({ active }){
             <div
                 className={`${
                     isOpen ? 'translate-x-0' : '-translate-x-full'
-                } fixed left-0 top-0 w-[100px] h-full dark:bg-gray-100 bg-[#131313] z-10 transition-transform duration-300 flex flex-col justify-between items-center desktop:translate-x-0`}
+                } fixed left-0 top-0 w-[100px] h-full dark:bg-gray-100 bg-[#131313] z-10 transition-transform duration-300 flex flex-col justify-between items-center desktop:translate-x-0 max-tablet:absolute`}
             >
-                <Link to="/home" className="flex flex-col justify-center items-center">
+                <Link to="/home" className="flex flex-col justify-center items-center ">
                     <img className="w-[50px] h-[50px] m-5" src={logo} alt="Logo" />
                 </Link>
                 {/*<div className="flex text-white flex-col w-1/2 justify-evenly items-center h-1/2">*/}
@@ -53,9 +53,15 @@ function SideBar({ active }){
                 </div>
                 <button
                     onClick={toggleSidebar}
-                    className="absolute left-[110px] top-1/2 transform -translate-y-1/2 text-4xl text-bold text-white px-4 py-2 desktop:hidden"
+                    className="absolute left-[110px] top-[45px] transform -translate-y-1/2 text-4xl text-bold text-white px-4 py-2 desktop:hidden"
                 >
-                    {isOpen ? "<" : ">"}
+                    {isOpen ? (
+                        <span>&lt;</span>
+                    ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    )}
                 </button>
                 <button
                     onClick={handleLogout} // Trigger the logout function on click

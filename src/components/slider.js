@@ -42,7 +42,7 @@ const Slider = () => {
     return (
         <div className="relative flex w-full items-center justify-center">
             {/* Previous button */}
-            <div className="relative top-1/2 transform">
+            <div className="relative left-48 top-1/2 transform">
                 <button
                     onClick={prevSlide}
                     className=" text-white dark:text-black p-2 "
@@ -55,7 +55,7 @@ const Slider = () => {
             <div className="overflow-hidden w-[920px] mx-auto">
                 <div
                     className="flex transition-transform duration-500  ease-in-out"
-                    style={{ transform: `translateX(-${currentIndex * 300}px)` }}
+                    style={{ transform: `translateX(-${currentIndex * 320}px)` }}
                 >
                     {muscleGroups.map((muscle, index) => (
                         <Link
@@ -78,7 +78,7 @@ const Slider = () => {
             </div>
 
             {/* Next button */}
-            <div className="absolute  right-0 top-1/2 transform -translate-y-1/2">
+            <div className="absolute  right-48 top-1/2 transform -translate-y-1/2">
                 <button
                     onClick={nextSlide}
                     className=" text-white dark:text-black p-2"
