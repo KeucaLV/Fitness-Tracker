@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chest from "../images/chest.jpg";
 import Back from "../images/back.jpg";
 import Legs from "../images/legs.jpg";
@@ -7,8 +7,7 @@ import Bicep from "../images/bicep.jpg";
 import Tricep from "../images/tricep.jpg";
 import Shoulder from "../images/shoulder.jpg";
 import Abs from "../images/abs.jpg";
-import { GrCaretNext } from "react-icons/gr";
-import { GrCaretPrevious } from "react-icons/gr";
+import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
 const Slider = () => {
@@ -24,51 +23,66 @@ const Slider = () => {
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(3);
 
-    // Function to go to the next set of muscle groups
+    useEffect(() => {
+        const updateItemsPerPage = () => {
+            const width = window.innerWidth;
+            if (width < 640) {
+                setItemsPerPage(1);
+            } else if (width < 1024) {
+                setItemsPerPage(2);
+            } else {
+                setItemsPerPage(3);
+            }
+        };
+
+        updateItemsPerPage();
+        window.addEventListener("resize", updateItemsPerPage);
+
+        return () => window.removeEventListener("resize", updateItemsPerPage);
+    }, []);
+
     const nextSlide = () => {
         setCurrentIndex((prevIndex) =>
-            prevIndex + 3 >= muscleGroups.length ? 0 : prevIndex + 3
+            prevIndex + itemsPerPage >= muscleGroups.length ? 0 : prevIndex + itemsPerPage
         );
     };
 
-    // Function to go to the previous set of muscle groups
     const prevSlide = () => {
         setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? muscleGroups.length - 3 : prevIndex - 3
+            prevIndex === 0 ? muscleGroups.length - itemsPerPage : prevIndex - itemsPerPage
         );
     };
 
     return (
-        <div className="relative flex w-full items-center justify-center">
+        <div className="relative flex w-full items-center justify-center px-2">
             {/* Previous button */}
-            <div className="relative left-48 top-1/2 transform">
-                <button
-                    onClick={prevSlide}
-                    className=" text-white dark:text-black p-2 "
-                >
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
+                <button onClick={prevSlide} className="text-white dark:text-black p-2">
                     <GrCaretPrevious className="size-8" />
                 </button>
             </div>
 
             {/* Slider Container */}
-            <div className="overflow-hidden w-[920px] mx-auto">
+            <div className="overflow-hidden w-full max-w-[1000px] mx-auto">
                 <div
-                    className="flex transition-transform duration-500  ease-in-out"
-                    style={{ transform: `translateX(-${currentIndex * 320}px)` }}
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)` }}
                 >
                     {muscleGroups.map((muscle, index) => (
                         <Link
                             to={`/workouts${muscle.link}`}
                             key={index}
-                            className="w-[300px] h-[180px] flex-shrink-0 m-2 flex items-center justify-center"
+                            className="w-full sm:w-1/2 laptop:w-1/3 flex-shrink-0 p-2"
                         >
-                            <div className="relative hover:scale-[103%] hover:cursor-pointer ease-in-out duration-500">
+                            <div className="relative w-full h-[180px] hover:scale-105 transition-transform duration-300 cursor-pointer">
                                 <img
                                     src={muscle.image}
-                                    className="w-[300px] brightness-[80%] h-[180px] object-cover dark: opacity-80"
+                                    className="w-full h-full object-cover brightness-75 dark:opacity-80"
+                                    alt={muscle.name}
                                 />
-                                <div className="absolute  inset-0 flex justify-center items-center text-white uppercase text-4xl bg-black bg-opacity-30">
+                                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 text-white uppercase text-2xl sm:text-3xl font-semibold">
                                     {muscle.name}
                                 </div>
                             </div>
@@ -78,12 +92,9 @@ const Slider = () => {
             </div>
 
             {/* Next button */}
-            <div className="absolute  right-48 top-1/2 transform -translate-y-1/2">
-                <button
-                    onClick={nextSlide}
-                    className=" text-white dark:text-black p-2"
-                >
-                    <GrCaretNext className="size-8"/>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10">
+                <button onClick={nextSlide} className="text-white dark:text-black p-2">
+                    <GrCaretNext className="size-8" />
                 </button>
             </div>
         </div>

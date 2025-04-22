@@ -52,11 +52,11 @@ function Profile() {
         <>
         <SideBar active="profile" />
             <div className="flex flex-col w-screen h-screen items-center font-montserrat overflow-x-hidden dark:bg-white bg-[#000000]">
-                <div className="flex relative flex-col pl-[100px] w-screen h-screen m-0 max-desktop:flex-col max-desktop:left-0">
+                <div className="flex relative flex-col pl-[100px] w-screen h-screen m-0 max-desktop:flex-col max-desktop:pl-0">
                     <Header />
                     <div className="flex relative flex-col flex-wrap pr-16 left-[50px] max-desktop:left-0">
                     <h1 className="text-white self-center m-4 mt-2 text-3xl  dark:text-black uppercase">Progress Hub — Where Effort Meets Results</h1>
-                        <div className="flex flex-row">
+                        <div className="flex flex-row flex-wrap">
                             <div className="flex flex-col justify-center flex-wrap flex-[50%] text-white ">
                                 <div className="flex items-center ">
                                     <h1 className="text-[20px] -mt-[70px]">Participate in the leaderboard </h1>
@@ -67,7 +67,7 @@ function Profile() {
                                 </div>
                                 <div className="h-[2px] w-full bg-gradient-to-r from-[#171717] via-[#303030] to-[#171717]"></div>
                                 {user ? (
-                                    <div className="flex flex-row justify-evenly">
+                                    <div className="flex flex-row flex-wrap justify-evenly">
                                         <div className="flex flex-[25%] max-w-[250px] flex-col items-center p-4 ">
                                             <img className="w-[155px] h-[150px] rounded-full" src={`${user.img}`}/>
                                             <h1 className="text-2xl mt-3">{user.username}</h1>
@@ -113,8 +113,8 @@ function Profile() {
                                     <h1 className="text-white">Loading user data...</h1>
                                 )}
                                 <div className="h-[2px] w-full bg-gradient-to-r from-[#171717] via-[#303030] to-[#171717]"></div>
-                                <div className="flex w-full mt-6 justify-evenly items-center">
-                                    <Link to="/favouriteWorkouts" className="flex flex-wrap justify-center items-center hover:brightness-[70%] hover:cursor-pointer ease-in-out duration-500">
+                                <div className="flex flex-wrap w-full mt-6 justify-evenly items-center">
+                                    <Link to="/favouriteWorkouts" className="flex justify-center items-center hover:brightness-[70%] hover:cursor-pointer ease-in-out duration-500">
                                         <img className="flex flex-[50%] brightness-[30%] max-w-[380px]" src={favouriteWorkout}/>
                                         <h1 className="flex absolute text-[30px] uppercase">Favourite Workout</h1>
                                     </Link>
@@ -129,39 +129,43 @@ function Profile() {
                         <h1 className="relative text-white text-[20px]">
                             Some playlists you can listen to while you workout!
                         </h1>
-                        <div className="flex flex-row flex-wrap">
-                            <iframe
-                                className="rounded-lg flex-[25%] m-2"
-                                src="https://open.spotify.com/embed/playlist/7ivXaN4XVG1yYsFpD2bdKV?utm_source=generator&theme=0"
-                                width="100%"
-                                height="152"
-                                frameBorder="0"
-                                allowFullScreen=""
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                                loading="lazy"
-                            ></iframe>
-
-                            <iframe
-                                className="rounded-lg flex-[25%] m-2"
-                                src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn?utm_source=generator&theme=0"
-                                width="100%"
-                                height="152"
-                                frameBorder="0"
-                                allowFullScreen=""
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                                loading="lazy"
-                            ></iframe>
-
-                            <iframe
-                                className="rounded-lg flex-[25%] m-2"
-                                src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0pH2SQMRXnC?utm_source=generator&theme=0"
-                                width="100%"
-                                height="152"
-                                frameBorder="0"
-                                allowFullScreen=""
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                                loading="lazy"
-                            ></iframe>
+                        <div className="flex flex-row flex-wrap justify-center max-tablet:flex-col">
+                            <div className="flex w-[33%] max-tablet:w-[100%]">
+                                <iframe
+                                    className="rounded-lg flex-[25%] m-2"
+                                    src="https://open.spotify.com/embed/playlist/7ivXaN4XVG1yYsFpD2bdKV?utm_source=generator&theme=0"
+                                    width="100%"
+                                    height="152"
+                                    frameBorder="0"
+                                    allowFullScreen=""
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    loading="lazy"
+                                ></iframe>
+                            </div>
+                            <div className="flex w-[33%] max-tablet:w-[100%]">
+                                <iframe
+                                    className="rounded-lg flex-[25%] m-2"
+                                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn?utm_source=generator&theme=0"
+                                    width="100%"
+                                    height="152"
+                                    frameBorder="0"
+                                    allowFullScreen=""
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    loading="lazy"
+                                ></iframe>
+                            </div>
+                            <div className="flex w-[33%] max-tablet:w-[100%]">
+                                <iframe
+                                    className="rounded-lg flex-[25%] m-2"
+                                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0pH2SQMRXnC?utm_source=generator&theme=0"
+                                    width="100%"
+                                    height="152"
+                                    frameBorder="0"
+                                    allowFullScreen=""
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    loading="lazy"
+                                ></iframe>
+                            </div>
                         </div>
                     </div>
                     {isEditProfileOpen && (

@@ -150,7 +150,7 @@ function WorkoutList() {
                         {/* Workout Content */}
                         <div className="flex flex-wrap justify-between mt-6 gap-4 text-gray-400 tablet:flex-col">
                           <div className="flex flex-col justify-evenly w-full">
-                            <h2 className="text-white self-center text-2xl font-bold mb-2 uppercase dark:text-black">
+                            <h2 className="text-white text-center text-2xl font-bold mb-2 uppercase dark:text-black">
                               {workout.name || 'Workout Name'}
                             </h2>
                             <div className="flex flex-row justify-between mt-2">
@@ -171,19 +171,19 @@ function WorkoutList() {
     
                         {/* Explanation Overlay */}
                         {activeIndex === index && (
-                          <div className="absolute inset-0 bg-black/90 p-4 rounded-lg flex flex-col justify-center items-center z-20">
-                            <h3 className="text-white text-2xl uppercase mb-6">Explanation</h3>
-                            <p className="text-gray-200 text-md max-w-md">
-                              {workout.instructions || 'No explanation available.'}
-                            </p>
-                            <button
-                              onClick={() => setActiveIndex(null)}
-                              className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white"
-                            >
-                              Close
-                            </button>
-                          </div>
-                        )}
+                        <div className="absolute inset-0 bg-black/90 p-4 rounded-lg flex flex-col justify-center items-center z-20">
+                          <h3 className="text-white text-2xl uppercase mb-6">Explanation</h3>
+                          <p className="text-gray-200 text-md max-w-md">
+                            {workout.instructions || 'No explanation available.'}
+                          </p>
+                          <button
+                            onClick={() => setActiveIndex(null)}
+                            className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white"
+                          >
+                            Close
+                          </button>
+                        </div>
+                      )}
                       </div>
                     ))
                   )}

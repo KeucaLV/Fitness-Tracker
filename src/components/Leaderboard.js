@@ -19,7 +19,7 @@ function Leaderboard(){
                 <div className="flex flex-row mt-5">
                     <div className="flex justify-end flex-[20%] h-[300px]">
                         <div className="flex flex-col w-[90%] self-end items-center rounded-tl-[20px] h-[190px] bg-[#131313] dark:bg-gray-300">
-                            <div className="flex absolute w-[90px] h-[90px] top-[18%] border-[3px] border-blue-700 bg-white rounded-full justify-center items-center overflow-hidden">
+                            <div className="flex relative w-[90px] h-[90px] border-[3px] border-blue-700 bg-white rounded-full justify-center items-center overflow-hidden">
                                 <img className="flex " src={profile} />
                             </div>
                             <h1 className="text-white mt-[30px] dark:text-black">Niks Kevins</h1>
@@ -48,7 +48,7 @@ function Leaderboard(){
                     </div>
                     <div className="flex  items-center flex-[20%] h-[300px]">
                         <div className="flex flex-col w-full items-center self-end  rounded-t-[30px] h-[225px] bg-[#181818] dark:bg-gray-200">
-                            <div className="flex absolute w-[90px] h-[90px] top-[13%] border-[3px] border-yellow-500 bg-white rounded-full justify-center items-center overflow-hidden">
+                            <div className="flex relative w-[90px] h-[90px]  border-[3px] border-yellow-500 bg-white rounded-full justify-center items-center overflow-hidden">
                                 <img className="flex " src={profile} />
                             </div>
                             <h1 className="text-white mt-[30px] dark:text-black">Ralfs</h1>
@@ -59,7 +59,7 @@ function Leaderboard(){
                     </div>
                     <div className="flex items-center flex-[20%] h-[300px]">
                         <div className="flex flex-col w-[90%] items-center self-end  rounded-tr-[20px] h-[150px] bg-[#131313] dark:bg-gray-300">
-                            <div className="flex absolute w-[90px] h-[90px] top-[22%] bg-white border-[3px] border-green-500 rounded-full justify-center items-center overflow-hidden">
+                            <div className="flex relative w-[90px] h-[90px] bg-white border-[3px] border-green-500 rounded-full justify-center items-center overflow-hidden">
                                 <img className="flex " src={profile} />
                             </div>
                             <h1 className="text-white mt-[30px] dark:text-black">Reinis</h1>

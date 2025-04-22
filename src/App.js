@@ -27,29 +27,29 @@ function App() {
 
                 {/* Protected routes */}
                 <Route path="/home" element={
-                    
+                    <ProtectedRoute>
                         <Home />
-                    
+                    </ProtectedRoute>
                 } />
                 <Route path="/profile" element={
-                    
+                    <ProtectedRoute>
                         <Profile />
-                    
+                    </ProtectedRoute>
                 } />
                 <Route path="/calendar" element={
-                    
+                    <ProtectedRoute>
                         <CalendarPage />
-                    
+                    </ProtectedRoute>
                 } />
                 <Route path="/workouts" element={
-                    
+                    <ProtectedRoute>
                         <Workouts />
-                
+                    </ProtectedRoute>
                 } />
                 <Route path="/workouts/:muscle" element={
-                    
+                    <ProtectedRoute>
                         <WorkoutList />
-                    
+                    </ProtectedRoute>
                 } />
                 <Route path="/diet" element={
                     <ProtectedRoute>
